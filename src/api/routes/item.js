@@ -47,7 +47,7 @@ router.get('/:itemId', async (req, res, next) => {
 router.put('/:itemId', async (req, res, next) => {
   const options = {
     itemId: req.params.itemId,
-    body: req.body.body
+    body: req.body
   };
 
   try {
