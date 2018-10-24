@@ -1,3 +1,6 @@
+const config = require('../../lib/config');	
+const mysql = require('mysql');
+var pool = mysql.createPool(config.database);
 /**
  * @param {Object} options
  * @param {Object} options.body Item that needs to be added to the item list
@@ -35,8 +38,20 @@ module.exports.addItem = async (options) => {
  * @return {Promise}
  */
 module.exports.getItemById = async (options) => {
-  // Implement your business logic here...
-  //
+  return new Promise( ( resolve, reject ) => {
+    pool.query('SELECT * FROM items WHERE item_id = ?;', options.itemId, (err, result) => {
+        if (err) {
+          console.log("[mysql error]",err);
+          return reject(err);
+        }
+        
+        console.log(result);
+        resolve({
+          status: 200,
+          data: result
+        });
+    });
+  });
   // This function should return as follows:
   //
   // return {
@@ -52,10 +67,10 @@ module.exports.getItemById = async (options) => {
   //   error: 'Server Error' // Or another error message.
   // });
 
-  return {
-    status: 200,
-    data: 'getItemById ok!'
-  };
+  // return {
+  //   status: 200,
+  //   data: await result
+  // };
 };
 
 /**

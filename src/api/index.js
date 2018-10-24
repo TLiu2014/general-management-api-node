@@ -7,6 +7,10 @@ const logger = require('../lib/logger');
 const log = logger(config.logger);
 const app = express();
 
+app.listen(8000, function () {
+  console.log('listening ...');
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
