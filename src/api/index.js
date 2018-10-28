@@ -3,9 +3,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const config = require('../lib/config');
 const logger = require('../lib/logger');
+var cors = require('cors')
 
 const log = logger(config.logger);
 const app = express();
+app.use(cors())
 
 app.listen(8000, function () {
   console.log('listening ...');
