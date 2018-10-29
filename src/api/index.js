@@ -20,7 +20,7 @@ app.use(cookieParser());
 /*
  * Routes
  */
-app.use('/item', require('./routes/item'));
+app.use('/items', require('./routes/items'));
 
 // catch 404
 app.use((req, res, next) => {

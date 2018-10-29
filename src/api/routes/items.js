@@ -1,5 +1,5 @@
 const express = require('express');
-const item = require('../services/item');
+const items = require('../services/items');
 
 const router = new express.Router();
 
@@ -12,9 +12,28 @@ router.post('/', async (req, res, next) => {
   };
 
   try {
-    const result = await item.addItem(options);
+    const result = await items.addItem(options);
     res.status(200).send(result.data);
   } catch (err) {
+    return res.status(err.status).send({
+      status: err.status,
+      error: err.error
+    });
+  }
+});
+
+/**
+ * Returns a list of items
+ */
+router.get('/', async (req, res, next) => {
+  const options = {
+  };
+
+  try {
+    const result = await items.getAllItem(options);
+    res.status(result.status || 200).send(result.data);
+  } catch (err) {
+    console.log('bbbb', err);
     return res.status(err.status).send({
       status: err.status,
       error: err.error
@@ -31,7 +50,7 @@ router.get('/:itemId', async (req, res, next) => {
   };
 
   try {
-    const result = await item.getItemById(options);
+    const result = await items.getItemById(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     return res.status(err.status).send({
@@ -51,7 +70,7 @@ router.put('/:itemId', async (req, res, next) => {
   };
 
   try {
-    const result = await item.updateItemWithForm(options);
+    const result = await items.updateItemWithForm(options);
     res.status(200).send(result.data);
   } catch (err) {
     return res.status(err.status).send({
@@ -70,7 +89,7 @@ router.delete('/:itemId', async (req, res, next) => {
   };
 
   try {
-    const result = await item.deleteItem(options);
+    const result = await items.deleteItem(options);
     res.status(200).send(result.data);
   } catch (err) {
     return res.status(err.status).send({

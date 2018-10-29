@@ -28,6 +28,29 @@ module.exports.addItem = async (options) => {
 
 /**
  * @param {Object} options
+ * @throws {Error}
+ * @return {Promise}
+ */
+module.exports.getAllItem = async (options) => {
+  return new Promise( ( resolve, reject ) => {
+    pool.query('SELECT * FROM items;', (err, result) => {
+        if (err) {
+          return reject({
+            status: 500,
+            error: err
+          });
+        }
+        
+        resolve({
+          status: 200,
+          data: result
+        });
+    });
+  });
+};
+
+/**
+ * @param {Object} options
  * @param {Integer} options.itemId ID of item to return
  * @throws {Error}
  * @return {Promise}
