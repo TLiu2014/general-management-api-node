@@ -1,5 +1,6 @@
 const config = require('../../lib/config');	
 const mysql = require('mysql');
+const uniqid = require('uniqid');
 var pool = mysql.createPool(config.database);
 /**
  * @param {Object} options
@@ -10,7 +11,7 @@ var pool = mysql.createPool(config.database);
 module.exports.addItem = async (options) => {
   const body = options.body;
   return new Promise( ( resolve, reject ) => {
-    pool.query('INSERT INTO items (item_id, name, value) VALUES (?);', [Object.values(body)], (err, result) => {
+    pool.query('INSERT INTO items (item_id, name, value) VALUES (?);', [[uniqid.time(), body.name, body.value]], (err, result) => {
         if (err) {
           return reject({
             status: 500,

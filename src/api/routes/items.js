@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
 
   try {
     const result = await items.addItem(options);
-    res.status(200).send(result.data);
+    res.status(result.status || 200).send(result.data);
   } catch (err) {
     return res.status(err.status).send({
       status: err.status,
@@ -33,7 +33,6 @@ router.get('/', async (req, res, next) => {
     const result = await items.getAllItem(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
-    console.log('bbbb', err);
     return res.status(err.status).send({
       status: err.status,
       error: err.error
