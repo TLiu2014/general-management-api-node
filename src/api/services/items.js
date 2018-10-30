@@ -10,8 +10,9 @@ var pool = mysql.createPool(config.database);
  */
 module.exports.addItem = async (options) => {
   const body = options.body;
+  const itemId = uniqid.time();
   return new Promise( ( resolve, reject ) => {
-    pool.query('INSERT INTO items (item_id, name, value) VALUES (?);', [[uniqid.time(), body.name, body.value]], (err, result) => {
+    pool.query('INSERT INTO items (item_id, name, value) VALUES (?);', [[itemId, body.name, body.value]], (err, result) => {
         if (err) {
           return reject({
             status: 500,
@@ -21,7 +22,11 @@ module.exports.addItem = async (options) => {
         
         resolve({
           status: 200,
-          data: result
+          data: {
+            itemId: itemId,
+            name: body.name,
+            value: body.value
+          }
         });
     });
   });
@@ -44,7 +49,11 @@ module.exports.getAllItem = async (options) => {
         
         resolve({
           status: 200,
-          data: result
+          data: result.map(e => ({
+            itemId: e.item_id,
+            name: e.name,
+            value: e.value
+          }))
         });
     });
   });
