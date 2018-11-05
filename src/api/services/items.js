@@ -94,7 +94,7 @@ module.exports.updateItemWithForm = async (options) => {
   const body = options.body;
   
   return new Promise( ( resolve, reject ) => {
-    pool.query('UPDATE items SET item_id = ? ,name = ?, value = ? WHERE item_id = ?;', [...Object.values(body), options.itemId], (err, result) => {
+    pool.query('UPDATE items SET name = ?, value = ? WHERE item_id = ?;', [...Object.values(body), options.itemId], (err, result) => {
         if (err) {
           return reject({
             status: 500,
@@ -104,7 +104,11 @@ module.exports.updateItemWithForm = async (options) => {
         
         resolve({
           status: 200,
-          data: result
+          data: {
+            itemId: options.itemId,
+            name: body.name,
+            value: body.value
+          }
         });
     });
   });
