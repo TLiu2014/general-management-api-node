@@ -1,12 +1,12 @@
 const express = require('express');
 const items = require('../services/items');
-
+const validations = require('../services/validations');
 const router = new express.Router();
 
 /**
  * Add a new item to the item list
  */
-router.post('/', async (req, res, next) => {
+router.post('/', validations.validateBody, async (req, res, next) => {
   const options = {
     body: req.body
   };
@@ -62,7 +62,7 @@ router.get('/:itemId', async (req, res, next) => {
 /**
  * Updates a item in the item list with form data
  */
-router.put('/:itemId', async (req, res, next) => {
+router.put('/:itemId', validations.validateBody, async (req, res, next) => {
   const options = {
     itemId: req.params.itemId,
     body: req.body

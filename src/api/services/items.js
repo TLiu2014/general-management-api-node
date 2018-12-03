@@ -92,7 +92,6 @@ module.exports.getItemById = async (options) => {
  */
 module.exports.updateItemWithForm = async (options) => {
   const body = options.body;
-  
   return new Promise( ( resolve, reject ) => {
     pool.query('UPDATE items SET name = ?, value = ? WHERE item_id = ?;', [...Object.values(body), options.itemId], (err, result) => {
         if (err) {
