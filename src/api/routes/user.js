@@ -9,7 +9,7 @@ const router = new express.Router();
  */
 router.post('/', async (req, res, next) => {
   const options = {
-    body: req.body['body']
+    body: req.body
   };
 
   try {
@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     return res.status(500).send({
       status: 500,
-      error: 'Server Error'
+      error: err
     });
   }
 });

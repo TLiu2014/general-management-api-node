@@ -24,7 +24,7 @@ module.exports.createUser = async (options) => {
         resolve({
           status: 200,
           data: {
-            user_id: user_id,
+            user_id: userId,
             username: body.username,
             password: body.password
           }
