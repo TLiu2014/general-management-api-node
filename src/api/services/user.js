@@ -10,27 +10,27 @@ var pool = mysql.createPool(config.database);
  * @return {Promise}
  */
 module.exports.createUser = async (options) => {
-  // Implement your business logic here...
-  //
-  // This function should return as follows:
-  //
-  // return {
-  //   status: 200, // Or another success code.
-  //   data: [] // Optional. You can put whatever you want here.
-  // };
-  //
-  // If an error happens during your business logic implementation,
-  // you should throw an error as follows:
-  //
-  // throw new ServerError({
-  //   status: 500, // Or another error code.
-  //   error: 'Server Error' // Or another error message.
-  // });
-
-  return {
-    status: 200,
-    data: 'createUser ok!'
-  };
+  const body = options.body;
+  const userId = uniqid.time();
+  return new Promise( ( resolve, reject ) => {
+    pool.query('INSERT INTO users (user_id, username, password) VALUES (?);', [[userId, body.username, body.password]], (err, result) => {
+        if (err) {
+          return reject({
+            status: 500,
+            error: err
+          });
+        }
+        
+        resolve({
+          status: 200,
+          data: {
+            user_id: user_id,
+            username: body.username,
+            password: body.password
+          }
+        });
+    });
+  });
 };
 
 /**
