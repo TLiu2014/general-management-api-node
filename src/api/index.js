@@ -21,6 +21,7 @@ app.use(cookieParser());
  * Routes
  */
 app.use('/items', require('./routes/items'));
+app.use('/user', require('./routes/user'));
 
 // catch 404
 app.use((req, res, next) => {
